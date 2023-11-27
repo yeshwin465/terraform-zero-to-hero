@@ -10,14 +10,14 @@ provider "vault" {
     path = "auth/approle/login"
 
     parameters = {
-      role_id = "<>"
-      secret_id = "<>"
+      role_id = "0fd7c61b-4dc4-4376-cc1f-2c9d7743129e"
+      secret_id = "497c4471-5121-4528-a101-9a3169237a30"
     }
   }
 }
 
 data "vault_kv_secret_v2" "example" {
-  mount = "secret" // change it according to your mount
+  mount = "skv" // change it according to your mount
   name  = "test-secret" // change it according to your secret
 }
 
@@ -27,6 +27,6 @@ resource "aws_instance" "my_instance" {
 
   tags = {
     Name = "test"
-    Secret = data.vault_kv_secret_v2.example.data["foo"]
+    Secret = data.vault_kv_secret_v2.example.data["username"]
   }
 }
